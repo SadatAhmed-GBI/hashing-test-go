@@ -15,8 +15,20 @@ limitations under the License.
 */
 package main
 
-import "github.com/gitpod/mycli/cmd"
+import (
+	"crypto/sha256"
+	b64 "encoding/base64"
+	"fmt"
+)
 
 func main() {
-	cmd.Execute()
+	data := "abc"
+	hashConstant := "f9c977ea-b423-4b3e-9952-d38cec720b70"
+	hashValue := fmt.Sprintf("%s%s", hashConstant, data)
+
+	// calculate SHA-256 hash of the input
+	hash := sha256.Sum256([]byte(hashValue))
+
+	sEnc := b64.StdEncoding.EncodeToString(hash[:])
+	fmt.Println(sEnc)
 }
